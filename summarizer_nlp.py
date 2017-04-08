@@ -1,8 +1,14 @@
 import json
 import sys
-from nltk import sent_tokenize, word_tokenize
+
+import math
+import nltk
+from nltk import sent_tokenize, word_tokenize, bigrams
 from nltk.corpus import indian
 from nltk.tag import tnt
+from collections import Counter
+
+
 
 def readData():
     global dataFileOpen, stringLines
@@ -11,19 +17,57 @@ def readData():
 
 def formDataDict():
     global dataDict, stringLines, titleData, wordList, sentenceList
-    stringLines = stringLines.replace("?", ".")
-    stringLines = stringLines.replace("!", ".")
+    stringLines = stringLines.replace("?", ". ")
+    stringLines = stringLines.replace("!", ". ")
     stringLines = stringLines.replace("\"", "")
-    stringLines = stringLines.replace("।", ".")
+    stringLines = stringLines.replace("।", ". ")
+    stringLines = stringLines.replace("?", ". ")
     stringLines = stringLines.replace("\'", "")
     stringLines = stringLines.replace("\n", "")
+    removeStopWord()
+    generateBigrams()
     sentenceList = [sentenceList.strip() for sentenceList in stringLines.split('.')]
     titleData = sentenceList[0]
     del sentenceList[0]
     del sentenceList[-1]
+    #sentenceList1 = deepcopy(sentenceList)
     for sentence in (range(len(sentenceList))):
         sentenceList[sentence] = word_tokenize(sentenceList[sentence])
     wordList = set(word_tokenize(stringLines))
+
+def generateBigrams():
+    global bigrams, bigramsDict, bigramsWordsList
+    bigramsDict = {}
+    bigramsWordsList = []
+    wordTokenizedList = word_tokenize(stringLines)
+    print("-0--------------------------------")
+    for items in wordTokenizedList:
+        print (items)
+    print ("-0--------------------------------")
+    bigrams = list(nltk.bigrams(wordTokenizedList))
+    cfd = nltk.ConditionalFreqDist(bigrams)
+
+    for inneritems in cfd.items():
+        for items in inneritems[1].items():
+            if (items[1] > 2 and (inneritems[0] != '.' and items[0] != '.')):
+                if items[1] not in bigramsDict:
+                    bigramsDict[items[1]] = []
+                    bigramsDict[items[1]].append([inneritems[0], items[0]])
+                else:
+                    bigramsDict[items[1]].append([inneritems[0], items[0]])
+                bigramsWordsList.append([inneritems[0],items[0]])
+    print(bigramsWordsList)
+    sys.exit()
+
+def removeStopWord():
+    global stringLines
+    stopWordsFile = open("stopwords.txt", 'r', encoding = "utf-8")
+    stopWordsFileRead = stopWordsFile.readlines()
+    for words in stopWordsFileRead:
+        words = words.strip()
+        stringLines = stringLines.replace(words, "")
+        print (words)
+    #return stringLines
 
 def getSuffixes():
     global suffixes
@@ -38,15 +82,16 @@ def generateStemWords(word):
                     return word[:-int(key)]
         return word
 
-def partsOfSpeechTagger(localWordList, flag):
+def partsOfSpeechTagger(localWordList, checkString):
     global partsOfSpeechTaggedData, partsOfSpeechTaggedTitleData
     train_data = indian.tagged_sents('hindi.pos')  # code to have the reference for tagging
     tnt_pos_tagger = tnt.TnT()  # parts of speech tagger
     tnt_pos_tagger.train(train_data)  # Training the tnt Part of speech tagger with hindi data
-    if flag:
+    if checkString == "textData":
         partsOfSpeechTaggedData = (tnt_pos_tagger.tag(localWordList))
-    else:
+    elif checkString == "titleData":
         partsOfSpeechTaggedTitleData = (tnt_pos_tagger.tag(localWordList))
+
 
 def loadWordNet():
     global word_dict
@@ -102,7 +147,15 @@ def stemmingForTitle():
             continue
         titleList = stringTemp
 
-
+def properNounFeature(localPartsOfSpeechTaggedData):
+    global properNounList, unknownWordList
+    properNounList = []
+    unknownWordList = []
+    for items in localPartsOfSpeechTaggedData:
+        if (items[1] == "NNP"):
+            properNounList.append(items[0])
+        if (items[1] == "Unk"):
+            unknownWordList.append(items[0])
 
 def generateCueWordList(titleList):
     global cueWordList
@@ -111,6 +164,17 @@ def generateCueWordList(titleList):
         if items in word_dict:
             cueWordList.append(word_dict[items])
 
+def calculateIdf():
+    global idf
+    allWords = []
+    for sentence in range(len(sentenceList)):
+        allWords.extend(list(set(sentenceList[sentence])))
+    idf = Counter(allWords)
+
+    for items in idf:
+        idf[items] = math.log(len(sentenceList) / idf[items])
+
+
 def calculateFeatures():
     global featureProbablity
     featureProbablity = {}
@@ -118,37 +182,62 @@ def calculateFeatures():
         featureProbablity[i + 1] = {}
     i = 1
     j = len(sentenceList)
+    tfIdf = [0] * len(sentenceList)
     for sentences in sentenceList:
         countTopicFeature = 0
         countCueFeature = 0
-        print ("here")
+        countProperWordFeature = 0
+        countUnknownWordFeature = 0
         for words in sentences:
+            if words in properNounList:
+                countProperWordFeature += 1
+            elif words in unknownWordList:
+                countUnknownWordFeature += 1
             if words in titleList:
                 countTopicFeature += 1
+                countCueFeature += 1
             if words in cueWordList:
                 countCueFeature += 1
-        featureProbablity[i]["topicFeature"] = countTopicFeature
-        featureProbablity[i]["sentenceLengthFeature"] = len(sentences)
-        featureProbablity[i]["cueWordFeature"] = countCueFeature
+        featureProbablity[i]["topicFeature"] = countTopicFeature / len(sentences)
+        featureProbablity[i]["properWordFeature"] = countProperWordFeature / len(sentences)
+        featureProbablity[i]["unknownWordFeature"] = countUnknownWordFeature / len(sentences)
+        featureProbablity[i]["cueWordFeature"] = countCueFeature / len(sentences)
+
+        tfNumerator = {}
+        tfNumerator = Counter(sentences)
+        for words in tfNumerator:
+            tfNumerator[words] = (tfNumerator[words] / len(sentences) * idf[words])
+            tfIdf[i - 1] += tfNumerator[words]
+        featureProbablity[i]["tfIdf"] = tfIdf[i - 1] / len(sentences)
+
         if (i <= j):
-            featureProbablity[i]["sentencePositionFeature"] = i
-            featureProbablity[j]["sentencePositionFeature"] = i
+            print ("i: ", i, "sentencelenggth: " ,len(sentences))
+            print ("\n")
+            featureProbablity[i]["sentencePositionFeature"] = (j - (len(sentenceList) / 2)) / ((len(sentenceList) / 2))
+            featureProbablity[j]["sentencePositionFeature"] = (j - (len(sentenceList) / 2)) / ((len(sentenceList) / 2))
         i += 1
         j -= 1
+
+
 
 
 loadWordNet()
 getSuffixes()
 readData()
 formDataDict()
-partsOfSpeechTagger(wordList, True)
+partsOfSpeechTagger(wordList, "textData")
 removeStopWords(partsOfSpeechTaggedData, True)
-partsOfSpeechTagger(titleData.split(" "), False)
+partsOfSpeechTagger(titleData.split(" "), "titleData")
+properNounFeature(partsOfSpeechTaggedData)
 removeStopWords(partsOfSpeechTaggedTitleData, False)
 stemmingForData(sentenceList)
 stemmingForTitle()
 generateCueWordList(titleList)
+calculateIdf()
 calculateFeatures()
+for items in featureProbablity:
+    print (featureProbablity[items])
+#print (featureProbablity)
 
 
 
