@@ -16,7 +16,7 @@ def readData():
     stringLines = dataFileOpen.read()
 
 def formDataDict():
-    global dataDict, stringLines, titleData, wordList, sentenceList
+    global stringLines, titleData, wordList, sentenceList
     stringLines = stringLines.replace("?", ". ")
     stringLines = stringLines.replace("!", ". ")
     stringLines = stringLines.replace("\"", "")
@@ -33,7 +33,7 @@ def formDataDict():
     #sentenceList1 = deepcopy(sentenceList)
     for sentence in (range(len(sentenceList))):
         sentenceList[sentence] = word_tokenize(sentenceList[sentence])
-    wordList = set(word_tokenize(stringLines))
+    wordList = list(set(word_tokenize(stringLines)))
 
 def generateBigrams():
     global bigrams, bigramsDict, bigramsWordsList
@@ -56,8 +56,6 @@ def generateBigrams():
                 else:
                     bigramsDict[items[1]].append([inneritems[0], items[0]])
                 bigramsWordsList.append([inneritems[0],items[0]])
-    print(bigramsWordsList)
-    sys.exit()
 
 def removeStopWord():
     global stringLines
@@ -221,24 +219,23 @@ def calculateFeatures():
 
 
 
-loadWordNet()
-getSuffixes()
-readData()
-formDataDict()
-partsOfSpeechTagger(wordList, "textData")
-removeStopWords(partsOfSpeechTaggedData, True)
+loadWordNet() #word_dict = {} (Call outside for loop, no need to initialize
+getSuffixes() #suffixes = {} Call outside the loop, no need to initialize
+readData() #stringLines = ""
+formDataDict() #titleData = "", wordList = [], sentenceList = [], bigramDict = {}, bigramWordList  = [], bigram = []
+partsOfSpeechTagger(wordList, "textData") #partsOfSpeechTaggedData = [], partsOfSpeechTaggedTitleData = []
+removeStopWords(partsOfSpeechTaggedData, True) #stringLines = ""
 partsOfSpeechTagger(titleData.split(" "), "titleData")
-properNounFeature(partsOfSpeechTaggedData)
-removeStopWords(partsOfSpeechTaggedTitleData, False)
+properNounFeature(partsOfSpeechTaggedData) #properNounList = [], unknownWordlist = []
+removeStopWords(partsOfSpeechTaggedTitleData, False) #removedTaggedData = [], removedTaggedTitleData = []
 stemmingForData(sentenceList)
-stemmingForTitle()
-generateCueWordList(titleList)
+stemmingForTitle() #titleList = []
+generateCueWordList(titleList) #cueWordList = []
 calculateIdf()
-calculateFeatures()
+calculateFeatures() #featureProbablity = {}
 for items in featureProbablity:
     print (featureProbablity[items])
 #print (featureProbablity)
-
 
 
 
