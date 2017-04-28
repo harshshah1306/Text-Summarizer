@@ -9,7 +9,7 @@ Hindi Text Summarizer is a summarizer generating tool, written in python. It is 
  * [Anaconda](https://www.continuum.io/downloads)
  
  **Data**
- * We have scrapped the news articles using [beautiful soup](https://pypi.python.org/pypi/beautifulsoup4) library in python from this 	[website](http://www.sampadkiya.com/) 
+ * We have scraped the news articles using [beautiful soup](https://pypi.python.org/pypi/beautifulsoup4) library in python from this 	[website](http://www.sampadkiya.com/) 
 
 | Features | Values |
 | --- | --- |
