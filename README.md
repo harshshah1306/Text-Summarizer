@@ -44,6 +44,14 @@ Hindi Text Summarizer is a summarizer generating tool, written in python. It is 
 * K-Nearest Neighbor
 * Extremely Randomized Trees
 
-**Testing**
+**Testing Summaries**
 
 * Bleu Score
+
+
+
+**Contact Details**
+* Harsh Rakesh Shah     harshras@usc.edu
+* Atish Mukesh Jain     atishjai@usc.edu
+* Akshat Mukesh Shah    akshatms@usc.edu
+* Sahil Modak           smodak@usc.edu
