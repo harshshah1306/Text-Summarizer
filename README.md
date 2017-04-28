@@ -1,30 +1,39 @@
-M-HiTS: Multilingual Hindi Text 	
+## M-HiTS: Multilingual Hindi Text 
 
-	Summarizer
 Hindi Text Summarizer for News Articles in Hindi Language
 Hindi Text Summarizer is a summarizer generating tool, written in python. It is developed for everyone where they can come up with the summary in short for long news articles in Hindi
 
-Getting Started	
-Installation Guidelines
-M-HiTS is written in python
-* Installing Python
-Python official website
-* Installing Anaconda
-Anaconda website
+**Installation Guidelines**
+ 
+ * [Python Official Website](https://www.python.org/)
+ * [Anaconda](https://www.continuum.io/downloads)
+ 
+ **Data**
+ * We have scrapped the news articles using [beautiful soup](https://pypi.python.org/pypi/beautifulsoup4) library in python from this 	[website](http://www.sampadkiya.com/) 
 
-Data
+| Description | Count |
+| --- | --- |
+| Number Of Articles |      4,316   |
+|    Word Count      |    30,88,571 |
 
-* We have scrapped the news articles using beautiful soup library in python from this website 
+* We have generated the summary of the above Hindi articles using this [tool](https://bigdatasummarizer.com/summarizer/online/advanced.jsp?ui.lang=en)
 
-
-    Number of Articles             4316       Word Count          3088571
-* We have generated the Summary of the above Hindi articles using this tool
-    Number of Articles            4316       Word Count          1718785
-
-
+| Description | Count |
+| --- | --- |
+| Number Of Articles |      4,316    |
+|    Word Count      |     17,18,785 |
 
 
 
+## Playgrounds for Examples from Official Repository (v.0.10.0)
+* [Rich Text Editor](http://codepen.io/Kiwka/pen/YNYvyG)
+* [Color Editor](http://codepen.io/Kiwka/pen/oBpVve)
+* [Convert from HTML Editor](http://codepen.io/Kiwka/pen/YNYgWa)
+* [Entity Editor](http://codepen.io/Kiwka/pen/wgpOoZ)
+* [Link Editor](http://codepen.io/Kiwka/pen/ZLvPeO)
+* [Media Editor](http://codepen.io/Kiwka/pen/rjpRzj)
+* [Plain Text Editor](http://codepen.io/Kiwka/pen/jyYJzb)
+* [Decorators Editor - Tweet example](http://codepen.io/Kiwka/pen/KaZERV)
 
 
 
