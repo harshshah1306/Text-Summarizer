@@ -26,3 +26,24 @@ Hindi Text Summarizer is a summarizer generating tool, written in python. It is 
 |    Word Count      |   17,18,785 |
 
 
+**Features**
+
+* Topic Feature
+* Sentence Position Feature
+* Proper Noun Feature
+* Cue Word Feature
+* Bigram Feature
+* Unknown Word Feature
+
+**Testing Algorithms**
+
+* Gradient Boost
+* Random Forest
+* AdaBoost
+* Svm
+* K-Nearest Neighbor
+* Extremely Randomized Trees
+
+**Testing 
+
+* Bleu Score
