@@ -50,8 +50,8 @@ Hindi Text Summarizer is a summarizer generating tool, written in python. It is 
 
 
 
-**Contact Details**
-* Harsh Rakesh Shah     harshras@usc.edu
-* Atish Mukesh Jain     atishjai@usc.edu
-* Akshat Mukesh Shah    akshatms@usc.edu
-* Sahil Modak           smodak@usc.edu
+**TEAM**
+* Harsh Rakesh Shah     
+* Atish Mukesh Jain
+* Akshat Mukesh Shah
+* Sahil Modak
