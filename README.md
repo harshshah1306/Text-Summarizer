@@ -11,14 +11,18 @@ Hindi Text Summarizer is a summarizer generating tool, written in python. It is 
  **Data**
  * We have scrapped the news articles using [beautiful soup](https://pypi.python.org/pypi/beautifulsoup4) library in python from this 	[website](http://www.sampadkiya.com/) 
 
-| Description | Count |
+| Features | Values |
 | --- | --- |
-| Number Of Articles |      4,316   |
-|    Word Count      |    30,88,571 |
+| Number Of Articles|      4,316   |
+|   Sentence Count  |    1,52,270  |
+|     Word Count    |    30,88,571 |
 
 * We have generated the summary of the above Hindi articles using this [tool](https://bigdatasummarizer.com/summarizer/online/advanced.jsp?ui.lang=en)
 
-| Description | Count |
+| Features | Values |
 | --- | --- |
-| Number Of Articles |      4,316    |
-|    Word Count      |     17,18,785 |
+| Number Of Articles |     4,316   |
+|   Sentence Count   |    63,915   |
+|    Word Count      |   17,18,785 |
+
+
