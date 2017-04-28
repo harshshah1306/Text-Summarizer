@@ -22,25 +22,3 @@ Hindi Text Summarizer is a summarizer generating tool, written in python. It is 
 | --- | --- |
 | Number Of Articles |      4,316    |
 |    Word Count      |     17,18,785 |
-
-
-
-## Playgrounds for Examples from Official Repository (v.0.10.0)
-* [Rich Text Editor](http://codepen.io/Kiwka/pen/YNYvyG)
-* [Color Editor](http://codepen.io/Kiwka/pen/oBpVve)
-* [Convert from HTML Editor](http://codepen.io/Kiwka/pen/YNYgWa)
-* [Entity Editor](http://codepen.io/Kiwka/pen/wgpOoZ)
-* [Link Editor](http://codepen.io/Kiwka/pen/ZLvPeO)
-* [Media Editor](http://codepen.io/Kiwka/pen/rjpRzj)
-* [Plain Text Editor](http://codepen.io/Kiwka/pen/jyYJzb)
-* [Decorators Editor - Tweet example](http://codepen.io/Kiwka/pen/KaZERV)
-
-
-
-
-
-
-
-
-
-
