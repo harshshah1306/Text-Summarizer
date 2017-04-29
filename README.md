@@ -46,6 +46,7 @@ Manual summarization of articles has also become a cumbersome task. The goal of 
 * SVM
 * K-Nearest Neighbor
 * Extremely Randomized Trees
+* Logistic Regression
 
 **Testing Summaries**
 
