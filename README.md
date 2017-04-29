@@ -55,7 +55,7 @@ Manual summarization of articles has also become a cumbersome task. The goal of 
 
 
 **TEAM**  
-* Akshat Mukesh Shah
-* Atish Mukesh Jain
-* Harsh Rakesh Shah   
-* Sahil Modak
+* [Akshat Mukesh Shah](https://github.com/akshat1710/)
+* [Atish Mukesh Jain](https://github.com/atishjain17/)
+* [Harsh Rakesh Shah](https://github.com/harshshah1306/)   
+* [Sahil Murad Modak](https://github.com/sahilmodak1/)
