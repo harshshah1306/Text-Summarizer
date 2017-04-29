@@ -54,7 +54,7 @@ Manual summarization of articles has also become a cumbersome task. The goal of 
 * Manual Testing
 
 
-**TEAM**  
+**Team**  
 * [Akshat Mukesh Shah](https://github.com/akshat1710/)
 * [Atish Mukesh Jain](https://github.com/atishjain17/)
 * [Harsh Rakesh Shah](https://github.com/harshshah1306/)   
